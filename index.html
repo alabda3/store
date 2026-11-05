@@ -592,6 +592,46 @@ html[data-theme="dark"] .product.product-modern .modern-title{color:#fff!importa
 }
 @media(max-width:650px){.smart-app-download .smart-app-image-link{max-width:255px;border-radius:24px}}
 
+
+/* ===== متجر الإبداع: نظام إظهار خصومات المنتجات ===== */
+.product.product-modern .product-discount-badge{
+  position:absolute;top:14px;right:14px;z-index:5;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:#c92840;color:white;border:1px solid #ffe1e7;
+  border-radius:999px;padding:7px 10px;font-size:13px;
+  font-weight:900;box-shadow:0 3px 10px #3a0c2240;
+  direction:rtl;line-height:1.2;pointer-events:none;
+}
+.product.product-modern .modern-price-box .price{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;min-width:0;max-width:100%;
+}
+.discount-old-price{
+  color:#a3b2c6!important;font-size:clamp(11px,1.1vw,16px);
+  font-weight:600;text-decoration:line-through;
+  text-decoration-thickness:1.5px;direction:ltr;
+  unicode-bidi:isolate;white-space:nowrap;line-height:1.15;
+}
+.discount-new-price{direction:ltr;unicode-bidi:isolate;white-space:nowrap}
+.product.product-modern .modern-price-box:has(.discount-old-price){min-height:74px}
+#galleryPrice .discount-old-price,.cart-price-info .discount-old-price{
+  color:#8d96a4!important;font-size:13px;
+}
+#galleryPrice:has(.discount-old-price){display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+#galleryPrice .discount-new-price{font-size:21px;font-weight:900}
+.cart-price-info{display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin-top:7px;font-size:14px;font-weight:800;color:#176c82}
+.cart-price-info .discount-new-price{color:#176c82}
+#cartSavingLine{color:#137d65;border-top:1px dashed #b6dfd0;padding-top:10px}
+html[data-theme="dark"] .cart-price-info .discount-new-price{color:#a3e3ec}
+html[data-theme="dark"] .discount-old-price{color:#b5bdc9!important}
+@media(max-width:650px){
+  .product.product-modern .product-discount-badge{top:7px;right:7px;padding:5px 7px;font-size:10px}
+  .product.product-modern .modern-price-box:has(.discount-old-price){min-height:62px}
+  .product.product-modern .modern-price-box .discount-old-price{font-size:10px}
+  .product.product-modern .modern-price-box .price{gap:2px}
+  .product.product-modern .modern-footer:has(.discount-old-price){min-height:62px}
+}
+
 </style>
 <meta name="theme-color" content="#1c3168">
 <meta name="application-name" content="الإبداع">
@@ -635,7 +675,7 @@ html[data-theme="dark"] .product.product-modern .modern-title{color:#fff!importa
   <section id="productsSection" class="products-area"><div class="sectionTitle"><h2>أحدث المنتجات <span class="subtitle">قطع مميزة، ونقش يحفظ الذكريات</span></h2><div class="catalog-meta"><span class="product-total" id="productCount">0 منتج</span><button type="button" class="outline-btn" id="showAllProducts">عرض الكل ←</button></div></div><div class="catalog-filters" id="catalogFilters" aria-label="تصفية المنتجات"></div><div class="grid" id="products"></div></section>
   <section id="aboutSection" class="benefits" aria-label="عن المتجر"><div class="benefit"><span class="benefit-symbol">✧</span><div><strong>لمسة خاصة لكل هدية</strong><span>خيارات متنوعة من النقش والتصميم حسب الطلب</span></div></div><div class="benefit"><span class="benefit-symbol">♧</span><div><strong>هدايا تحكي قصة</strong><span>منتجات خشبية وأكريليك وتفاصيل تعكس ذوقك</span></div></div><div class="benefit"><span class="benefit-symbol">▣</span><div><strong>الدفع عند الاستلام</strong><span>اطلب من المتجر بدون الحاجة لإنشاء حساب</span></div></div></section>
 </section>
-<section id="cartPage" class="hidden"><h2>سلة المشتريات</h2><div class="panel" id="cartItems"></div><div class="panel"><div class="totals"><span>مجموع المنتجات</span><span id="cartSubtotal"></span></div><div class="totals"><span>التوصيل</span><span id="cartDelivery"></span></div><div class="totals"><span>الإجمالي</span><span id="cartTotal"></span></div><button id="checkoutBtn">متابعة إلى تفاصيل التوصيل</button></div></section>
+<section id="cartPage" class="hidden"><h2>سلة المشتريات</h2><div class="panel" id="cartItems"></div><div class="panel"><div class="totals"><span>مجموع المنتجات</span><span id="cartSubtotal"></span></div><div class="totals hidden" id="cartSavingLine"><span>وفّرت من خصومات المنتجات</span><span id="cartSavingValue"></span></div><div class="totals"><span>التوصيل</span><span id="cartDelivery"></span></div><div class="totals"><span>الإجمالي</span><span id="cartTotal"></span></div><button id="checkoutBtn">متابعة إلى تفاصيل التوصيل</button></div></section>
 <section id="checkoutPage" class="hidden"><h2>إتمام الطلب</h2><div class="steps"><div class="step on"><b>1</b>تفاصيل التوصيل</div><div class="step"><b>2</b>مراجعة الطلب</div><div class="step"><b>3</b>تم التأكيد</div></div><form id="checkoutForm" class="panel"><div class="formGrid"><label class="field">اسم الزبون *<input name="name" required minlength="2" maxlength="120"></label><label class="field">رقم الهاتف العراقي *<input name="phone" type="tel" required pattern="[0-9+ -]{10,20}" placeholder="07xxxxxxxxx"></label><label class="field">المحافظة *<select name="province" required><option value="">اختر المحافظة</option></select></label><div id="deliveryEstimate" class="delivery-estimate" role="status" aria-live="polite">🚚 التوصيل: 3,000 د.ع داخل البصرة، و5,000 د.ع لباقي المحافظات. اختار المحافظة لحساب الإجمالي.</div><label class="field">المدينة / المنطقة *<input name="district" required minlength="2" maxlength="120"></label><label class="field full">العنوان التفصيلي / أقرب نقطة دالة *<textarea name="address" required minlength="5" maxlength="500"></textarea></label><label class="field full">ملاحظات الطلب (اختياري)<textarea name="notes" maxlength="1000"></textarea></label></div>
 <div class="payment-select-box" id="paymentSelectBox">
   <h3>طريقة الدفع</h3>
@@ -789,8 +829,31 @@ function addCart(id){
   cart[id] = Math.min(99, (cart[id] || 0) + 1);
   saveCart();
 }
+// خصم المنتج يُقرأ من Supabase؛ price هو سعر البيع النهائي المعتمد للطلبات.
+// إذا ماكو خصم، نخلي عرض السعر الأصلي كما كان بالضبط.
+function productDiscount(p){
+  const original=Number(p?.original_price);
+  const current=Number(p?.price);
+  const percent=Number(p?.discount_percent);
+  if(!Number.isFinite(original)||!Number.isFinite(current)||!Number.isInteger(percent)
+    ||percent<1||percent>99||original<=current||current<0)return null;
+  return {original,percent,saved:original-current};
+}
+function appendPriceLabels(root,p){
+  const discount=productDiscount(p);
+  if(discount){
+    const old=node('span',money(discount.original));
+    old.className='discount-old-price';
+    old.setAttribute('aria-label','السعر قبل الخصم');
+    root.append(old);
+  }
+  const current=node('span',money(p.price));
+  current.className='discount-new-price';
+  current.setAttribute('aria-label',discount?'السعر بعد الخصم':'السعر');
+  root.append(current);
+}
 function productImages(p){return [...new Set([p.image_url,...(Array.isArray(p.image_urls)?p.image_urls:[])].map(safeUrl).filter(Boolean))]}
-function openProduct(p){const pics=productImages(p);if(!pics.length)pics.push('assets/logo.jpg');const thumbs=$('galleryThumbs');thumbs.replaceChildren();$('galleryName').textContent=p.name;$('galleryDescription').textContent=p.description||p.category;$('galleryPrice').textContent=money(p.price);const main=$('galleryMain');main.alt=p.name;pics.forEach((url,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','الصورة '+(i+1));const im=document.createElement('img');im.src=url;im.alt='';b.append(im);b.onclick=()=>{main.src=url;for(const x of thumbs.children)x.classList.remove('selected');b.classList.add('selected')};thumbs.append(b);if(i===0)b.click()});$('galleryAdd').onclick=()=>{addCart(p.id);$('galleryAdd').textContent='✓ تمت الإضافة';setTimeout(()=>{$('galleryAdd').textContent='＋ أضف إلى السلة'},900)};$('galleryOverlay').classList.remove('hidden');document.body.style.overflow='hidden';$('galleryClose').focus()}
+function openProduct(p){const pics=productImages(p);if(!pics.length)pics.push('assets/logo.jpg');const thumbs=$('galleryThumbs');thumbs.replaceChildren();$('galleryName').textContent=p.name;$('galleryDescription').textContent=p.description||p.category;$('galleryPrice').replaceChildren();appendPriceLabels($('galleryPrice'),p);const main=$('galleryMain');main.alt=p.name;pics.forEach((url,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','الصورة '+(i+1));const im=document.createElement('img');im.src=url;im.alt='';b.append(im);b.onclick=()=>{main.src=url;for(const x of thumbs.children)x.classList.remove('selected');b.classList.add('selected')};thumbs.append(b);if(i===0)b.click()});$('galleryAdd').onclick=()=>{addCart(p.id);$('galleryAdd').textContent='✓ تمت الإضافة';setTimeout(()=>{$('galleryAdd').textContent='＋ أضف إلى السلة'},900)};$('galleryOverlay').classList.remove('hidden');document.body.style.overflow='hidden';$('galleryClose').focus()}
 function closeProduct(){$('galleryOverlay').classList.add('hidden');document.body.style.overflow=''}
 $('galleryClose').onclick=closeProduct;
 $('galleryOverlay').onclick=e=>{if(e.target===$('galleryOverlay'))closeProduct()};
@@ -805,9 +868,15 @@ function productCard(p){
  const imageWrap=document.createElement('div');imageWrap.className='product-image-wrap';
  const title=node('h3',p.name);title.className='modern-title';
  imageWrap.append(photo,title,love);
+  const discount=productDiscount(p);
+  if(discount){
+    const badge=node('span','خصم '+discount.percent+'%');
+    badge.className='product-discount-badge';
+    imageWrap.append(badge);
+  }
  const footer=node('div','');footer.className='modern-footer';
  const priceBox=node('div','');priceBox.className='modern-price-box';
- const price=node('div',money(p.price));price.className='price';priceBox.append(price);
+ const price=node('div','');price.className='price';appendPriceLabels(price,p);priceBox.append(price);
  const b=document.createElement('button');b.type='button';b.className='add-btn modern-cart';b.setAttribute('aria-label','أضف '+p.name+' إلى السلة');
  const label=node('span','أضف إلى السلة');label.className='cart-label';
  const icon=document.createElementNS('http://www.w3.org/2000/svg','svg');icon.setAttribute('class','card-cart-icon');icon.setAttribute('viewBox','0 0 64 64');icon.setAttribute('aria-hidden','true');icon.innerHTML='<circle cx="25" cy="55" r="3.5"/><circle cx="49" cy="55" r="3.5"/><path d="M5 9h9l7 34h31l6-25H17"/><path d="M22 28h33M24 36h29M30 18l3 25M44 18l-2 25"/>';
@@ -821,7 +890,11 @@ function renderProducts(){
  const root=$('products');root.replaceChildren(...list.map(productCard));$('productCount').textContent=list.length+' منتج';
  if(!list.length){const empty=node('div','');empty.className='empty-state';const icon=node('div','✧');icon.className='empty-icon';const title=node('strong',products.length?'ماكو منتجات تطابق البحث حالياً':'منتجاتنا الجديدة بالطريق');const detail=node('p',products.length?'جرّب تصنيف ثاني أو امسح كلمة البحث.':'قريباً راح تشوف منتجات النقش والهدايا الخاصة هنا.');empty.append(icon,title,detail);if(products.length){const reset=node('button','عرض كل المنتجات');reset.onclick=()=>{activeCategory='';$('search').value='';renderCategoryTiles();renderProducts()};empty.append(reset)}root.append(empty)}
 }
-function renderCart(){const root=$('cartItems');root.replaceChildren();for(const {p,qty} of cartEntries()){const r=node('div','');r.className='cartRow';const im=document.createElement('img');im.src=safeUrl(p.image_url)||'assets/logo.jpg';const text=node('div','');text.className='grow';text.append(node('strong',p.name),node('div',money(p.price)));const c=node('div','');c.className='count';const minus=node('button','−'),plus=node('button','+');minus.type=plus.type='button';minus.setAttribute('aria-label','تقليل الكمية');plus.setAttribute('aria-label','زيادة الكمية');minus.className=plus.className='small soft';minus.onclick=()=>{cart[p.id]--;if(cart[p.id]<=0)delete cart[p.id];saveCart();renderCart()};plus.onclick=()=>{cart[p.id]=Math.min(99,cart[p.id]+1);saveCart();renderCart()};c.append(minus,node('span',qty),plus);r.append(im,text,c);root.append(r)}if(!cartEntries().length)root.append(node('div','سلتك فارغة'));$('cartSubtotal').textContent=money(subtotal());const fee=deliveryByProvince();$('cartDelivery').textContent=fee===null?'3,000–5,000 IQD (حسب المحافظة)':money(fee);$('cartTotal').textContent=fee===null?'يُحسب بعد تحديد المحافظة':money(subtotal()+fee);$('checkoutBtn').disabled=!cartEntries().length}
+function renderCart(){const root=$('cartItems');root.replaceChildren();for(const {p,qty} of cartEntries()){const r=node('div','');r.className='cartRow';const im=document.createElement('img');im.src=safeUrl(p.image_url)||'assets/logo.jpg';const text=node('div','');text.className='grow';const priceInfo=node('div','');priceInfo.className='cart-price-info';appendPriceLabels(priceInfo,p);text.append(node('strong',p.name),priceInfo);const c=node('div','');c.className='count';const minus=node('button','−'),plus=node('button','+');minus.type=plus.type='button';minus.setAttribute('aria-label','تقليل الكمية');plus.setAttribute('aria-label','زيادة الكمية');minus.className=plus.className='small soft';minus.onclick=()=>{cart[p.id]--;if(cart[p.id]<=0)delete cart[p.id];saveCart();renderCart()};plus.onclick=()=>{cart[p.id]=Math.min(99,cart[p.id]+1);saveCart();renderCart()};c.append(minus,node('span',qty),plus);r.append(im,text,c);root.append(r)}if(!cartEntries().length)root.append(node('div','سلتك فارغة'));$('cartSubtotal').textContent=money(subtotal());
+  const saved=cartEntries().reduce((sum,{p,qty})=>sum+(productDiscount(p)?.saved||0)*qty,0);
+  $('cartSavingLine').classList.toggle('hidden',saved<=0);
+  $('cartSavingValue').textContent=money(saved);
+  const fee=deliveryByProvince();$('cartDelivery').textContent=fee===null?'3,000–5,000 IQD (حسب المحافظة)':money(fee);$('cartTotal').textContent=fee===null?'يُحسب بعد تحديد المحافظة':money(subtotal()+fee);$('checkoutBtn').disabled=!cartEntries().length}
 function applyConfig(){
   for(const [id,value] of [
     ['brandName',config.name],
@@ -862,7 +935,15 @@ function applyConfig(){
 async function loadShop(){if(!db){$('products').append(node('p','أضف رابط ومفتاح Supabase في index.html لتشغيل المتجر'));return}const [pr,st]=await Promise.all([db.from('store_products').select('*').eq('active',true).order('created_at',{ascending:false}),db.from('store_config').select('*').eq('id',1).single()]);if(pr.error){$('products').replaceChildren(node('p','تعذر تحميل المنتجات: '+pr.error.message));}else{products=pr.data||[];renderCategoryTiles();renderProducts()}if(st.data){config=st.data;applyConfig();updatePaymentUI()}saveCart()}
 $('search').oninput=renderProducts;$('homeBtn').onclick=()=>show('shop');$('backShop').onclick=()=>show('shop');$('cartBtn').onclick=()=>{renderCart();show('cart')};$('checkoutBtn').onclick=()=>{if(cartEntries().length){refreshDeliveryEstimate();updatePaymentUI();show('checkout')}};
 for(const province of ['بغداد','البصرة','نينوى','أربيل','النجف','كربلاء','ذي قار','ميسان','المثنى','القادسية','واسط','بابل','ديالى','الأنبار','صلاح الدين','كركوك','دهوك','السليمانية'])$('checkoutForm').elements.province.add(new Option(province,province));
-$('checkoutForm').onsubmit=e=>{e.preventDefault();if(!cartEntries().length)return;const f=new FormData(e.currentTarget),summary=$('reviewDetails');summary.replaceChildren();for(const [label,key] of [['الاسم','name'],['الهاتف','phone'],['المحافظة','province'],['المنطقة','district'],['العنوان','address'],['الملاحظات','notes']])summary.append(node('p',label+': '+(f.get(key)||'—')));for(const {p,qty} of cartEntries())summary.append(node('p',p.name+' × '+qty+' — '+money(p.price*qty)));summary.append(node('h3','الإجمالي: '+money(subtotal()+config.delivery_fee)));$('checkoutForm').classList.add('hidden');$('review').classList.remove('hidden')};
+$('checkoutForm').onsubmit=e=>{e.preventDefault();if(!cartEntries().length)return;const f=new FormData(e.currentTarget),summary=$('reviewDetails');summary.replaceChildren();for(const [label,key] of [['الاسم','name'],['الهاتف','phone'],['المحافظة','province'],['المنطقة','district'],['العنوان','address'],['الملاحظات','notes']])summary.append(node('p',label+': '+(f.get(key)||'—')));for(const {p,qty} of cartEntries()){
+    const line=node('p',p.name+' × '+qty+' — '+money(p.price*qty));
+    const discount=productDiscount(p);
+    if(discount){
+      const note=node('small',' (خصم '+discount.percent+'%، وفّرت '+money(discount.saved*qty)+')');
+      note.className='muted';line.append(note);
+    }
+    summary.append(line);
+  }summary.append(node('h3','الإجمالي: '+money(subtotal()+config.delivery_fee)));$('checkoutForm').classList.add('hidden');$('review').classList.remove('hidden')};
 $('editOrder').onclick=()=>{$('review').classList.add('hidden');$('checkoutForm').classList.remove('hidden')};
 $('printCustomerReceipt').onclick=()=>printReceipt(lastCustomerReceipt);
 $('confirmOrder').onclick=async()=>{if(!db)return alert('لم يتم ربط Supabase');const f=new FormData($('checkoutForm'));const b=$('confirmOrder');b.disabled=true;try{const {data,error}=await db.rpc('store_checkout',{p_name:f.get('name'),p_phone:f.get('phone'),p_province:f.get('province'),p_district:f.get('district'),p_address:f.get('address'),p_notes:f.get('notes'),p_items:cartEntries().map(x=>({id:x.p.id,qty:x.qty}))});if(error)throw error;cart={};saveCart();$('checkoutForm').reset();$('checkoutForm').classList.remove('hidden');$('review').classList.add('hidden');$('doneText').textContent='رقم طلبك: '+data+' — راح نتواصل وياك لتأكيد التفاصيل.';show('done')}catch(e){alert('تعذر إرسال الطلب: '+e.message)}finally{b.disabled=false}};
@@ -972,7 +1053,15 @@ $('checkoutForm').onsubmit=e=>{
   const fee=deliveryByProvince();if(fee===null)return msg('checkoutMsg','اختار المحافظة حتى نحسب أجرة التوصيل');
   msg('checkoutMsg','');const f=new FormData(e.currentTarget),summary=$('reviewDetails');summary.replaceChildren();
   for(const [label,key] of [['الاسم','name'],['الهاتف','phone'],['المحافظة','province'],['المنطقة','district'],['العنوان','address'],['الملاحظات','notes']])summary.append(node('p',label+': '+(f.get(key)||'—')));
-  for(const {p,qty} of cartEntries())summary.append(node('p',p.name+' × '+qty+' — '+money(p.price*qty)));
+  for(const {p,qty} of cartEntries()){
+    const line=node('p',p.name+' × '+qty+' — '+money(p.price*qty));
+    const discount=productDiscount(p);
+    if(discount){
+      const note=node('small',' (خصم '+discount.percent+'%، وفّرت '+money(discount.saved*qty)+')');
+      note.className='muted';line.append(note);
+    }
+    summary.append(line);
+  }
   summary.append(node('p','طريقة الدفع: '+(chosenPayment()==='transfer'?'تحويل إلكتروني - بانتظار المراجعة':'عند الاستلام')));
   summary.append(node('p','مجموع المنتجات: '+money(subtotal())));
   summary.append(node('p','أجرة التوصيل: '+money(fee)));
