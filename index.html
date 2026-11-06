@@ -675,8 +675,8 @@ html[data-theme="dark"] .discount-old-price{color:#b5bdc9!important}
   <section id="productsSection" class="products-area"><div class="sectionTitle"><h2>أحدث المنتجات <span class="subtitle">قطع مميزة، ونقش يحفظ الذكريات</span></h2><div class="catalog-meta"><span class="product-total" id="productCount">0 منتج</span><button type="button" class="outline-btn" id="showAllProducts">عرض الكل ←</button></div></div><div class="catalog-filters" id="catalogFilters" aria-label="تصفية المنتجات"></div><div class="grid" id="products"></div></section>
   <section id="aboutSection" class="benefits" aria-label="عن المتجر"><div class="benefit"><span class="benefit-symbol">✧</span><div><strong>لمسة خاصة لكل هدية</strong><span>خيارات متنوعة من النقش والتصميم حسب الطلب</span></div></div><div class="benefit"><span class="benefit-symbol">♧</span><div><strong>هدايا تحكي قصة</strong><span>منتجات خشبية وأكريليك وتفاصيل تعكس ذوقك</span></div></div><div class="benefit"><span class="benefit-symbol">▣</span><div><strong>الدفع عند الاستلام</strong><span>اطلب من المتجر بدون الحاجة لإنشاء حساب</span></div></div></section>
 </section>
-<section id="cartPage" class="hidden"><h2>سلة المشتريات</h2><div class="panel" id="cartItems"></div><div class="panel"><div class="totals"><span>مجموع المنتجات</span><span id="cartSubtotal"></span></div><div class="totals hidden" id="cartSavingLine"><span>وفّرت من خصومات المنتجات</span><span id="cartSavingValue"></span></div><div class="totals"><span>التوصيل</span><span id="cartDelivery"></span></div><div class="totals"><span>الإجمالي</span><span id="cartTotal"></span></div><button id="checkoutBtn">متابعة إلى تفاصيل التوصيل</button></div></section>
-<section id="checkoutPage" class="hidden"><h2>إتمام الطلب</h2><div class="steps"><div class="step on"><b>1</b>تفاصيل التوصيل</div><div class="step"><b>2</b>مراجعة الطلب</div><div class="step"><b>3</b>تم التأكيد</div></div><form id="checkoutForm" class="panel"><div class="formGrid"><label class="field">اسم الزبون *<input name="name" required minlength="2" maxlength="120"></label><label class="field">رقم الهاتف العراقي *<input name="phone" type="tel" required pattern="[0-9+ -]{10,20}" placeholder="07xxxxxxxxx"></label><label class="field">المحافظة *<select name="province" required><option value="">اختر المحافظة</option></select></label><div id="deliveryEstimate" class="delivery-estimate" role="status" aria-live="polite">🚚 التوصيل: 3,000 د.ع داخل البصرة، و5,000 د.ع لباقي المحافظات. اختار المحافظة لحساب الإجمالي.</div><label class="field">المدينة / المنطقة *<input name="district" required minlength="2" maxlength="120"></label><label class="field full">العنوان التفصيلي / أقرب نقطة دالة *<textarea name="address" required minlength="5" maxlength="500"></textarea></label><label class="field full">ملاحظات الطلب (اختياري)<textarea name="notes" maxlength="1000"></textarea></label></div>
+<section id="cartPage" class="hidden"><h2>سلة المشتريات</h2><div class="panel" id="cartItems"></div><div class="panel"><div class="totals"><span>مجموع المنتجات</span><span id="cartSubtotal"></span></div><div class="totals hidden" id="cartSavingLine"><span>وفّرت من خصومات المنتجات</span><span id="cartSavingValue"></span></div><button id="checkoutBtn">متابعة إلى تفاصيل التوصيل</button></div></section>
+<section id="checkoutPage" class="hidden"><h2>إتمام الطلب</h2><div class="steps"><div class="step on"><b>1</b>تفاصيل التوصيل</div><div class="step"><b>2</b>مراجعة الطلب</div><div class="step"><b>3</b>تم التأكيد</div></div><form id="checkoutForm" class="panel"><div class="formGrid"><label class="field">اسم الزبون *<input name="name" required minlength="2" maxlength="120"></label><label class="field">رقم الهاتف العراقي *<input name="phone" type="tel" required pattern="[0-9+ -]{10,20}" placeholder="07xxxxxxxxx"></label><label class="field">المحافظة *<select name="province" required><option value="">اختر المحافظة</option></select></label><label class="field">المدينة / المنطقة *<input name="district" required minlength="2" maxlength="120"></label><label class="field full">العنوان التفصيلي / أقرب نقطة دالة *<textarea name="address" required minlength="5" maxlength="500"></textarea></label><label class="field full">ملاحظات الطلب (اختياري)<textarea name="notes" maxlength="1000"></textarea></label></div>
 <div class="payment-select-box" id="paymentSelectBox">
   <h3>طريقة الدفع</h3>
   <label class="payment-choice"><input type="radio" name="payment_method" value="cod" checked> <span>💵 الدفع عند الاستلام</span></label>
@@ -894,7 +894,7 @@ function renderCart(){const root=$('cartItems');root.replaceChildren();for(const
   const saved=cartEntries().reduce((sum,{p,qty})=>sum+(productDiscount(p)?.saved||0)*qty,0);
   $('cartSavingLine').classList.toggle('hidden',saved<=0);
   $('cartSavingValue').textContent=money(saved);
-  const fee=deliveryByProvince();$('cartDelivery').textContent=fee===null?'3,000–5,000 IQD (حسب المحافظة)':money(fee);$('cartTotal').textContent=fee===null?'يُحسب بعد تحديد المحافظة':money(subtotal()+fee);$('checkoutBtn').disabled=!cartEntries().length}
+  $('checkoutBtn').disabled=!cartEntries().length}
 function applyConfig(){
   for(const [id,value] of [
     ['brandName',config.name],
@@ -933,7 +933,7 @@ function applyConfig(){
   }
 }
 async function loadShop(){if(!db){$('products').append(node('p','أضف رابط ومفتاح Supabase في index.html لتشغيل المتجر'));return}const [pr,st]=await Promise.all([db.from('store_products').select('*').eq('active',true).order('created_at',{ascending:false}),db.from('store_config').select('*').eq('id',1).single()]);if(pr.error){$('products').replaceChildren(node('p','تعذر تحميل المنتجات: '+pr.error.message));}else{products=pr.data||[];renderCategoryTiles();renderProducts()}if(st.data){config=st.data;applyConfig();updatePaymentUI()}saveCart()}
-$('search').oninput=renderProducts;$('homeBtn').onclick=()=>show('shop');$('backShop').onclick=()=>show('shop');$('cartBtn').onclick=()=>{renderCart();show('cart')};$('checkoutBtn').onclick=()=>{if(cartEntries().length){refreshDeliveryEstimate();updatePaymentUI();show('checkout')}};
+$('search').oninput=renderProducts;$('homeBtn').onclick=()=>show('shop');$('backShop').onclick=()=>show('shop');$('cartBtn').onclick=()=>{renderCart();show('cart')};$('checkoutBtn').onclick=()=>{if(cartEntries().length){updatePaymentUI();show('checkout')}};
 for(const province of ['بغداد','البصرة','نينوى','أربيل','النجف','كربلاء','ذي قار','ميسان','المثنى','القادسية','واسط','بابل','ديالى','الأنبار','صلاح الدين','كركوك','دهوك','السليمانية'])$('checkoutForm').elements.province.add(new Option(province,province));
 $('checkoutForm').onsubmit=e=>{e.preventDefault();if(!cartEntries().length)return;const f=new FormData(e.currentTarget),summary=$('reviewDetails');summary.replaceChildren();for(const [label,key] of [['الاسم','name'],['الهاتف','phone'],['المحافظة','province'],['المنطقة','district'],['العنوان','address'],['الملاحظات','notes']])summary.append(node('p',label+': '+(f.get(key)||'—')));for(const {p,qty} of cartEntries()){
     const line=node('p',p.name+' × '+qty+' — '+money(p.price*qty));
@@ -1020,15 +1020,8 @@ function deliveryByProvince(){
   const province=String($('checkoutForm').elements.province.value||'').trim();
   return province ? (province==='البصرة' ? 3000 : 5000) : null;
 }
-function refreshDeliveryEstimate(){
-  const amount=deliveryByProvince();
-  const province=$('checkoutForm').elements.province.value;
-  $('deliveryEstimate').textContent=amount===null
-    ? '🚚 التوصيل: 3,000 د.ع للبصرة، و5,000 د.ع لباقي المحافظات. اختار المحافظة لحساب المبلغ النهائي.'
-    : '🚚 أجرة التوصيل إلى '+province+': '+money(amount)+' — إجمالي الطلب: '+money(subtotal()+amount);
-}
 $('checkoutForm').elements.province.addEventListener('change',()=>{
-  refreshDeliveryEstimate();updatePaymentUI();renderCart();
+  updatePaymentUI();renderCart();
 });
 function chosenPayment(){return $('checkoutForm').elements.payment_method.value||'cod'}
 function updatePaymentUI(){
@@ -1041,7 +1034,6 @@ function updatePaymentUI(){
 $('checkoutForm').querySelectorAll('input[name="payment_method"]').forEach(r=>r.addEventListener('change',updatePaymentUI));
 $('copyAccount').onclick=async()=>{const val=paymentSettings.transfer_details||'';try{await navigator.clipboard.writeText(val);$('copyAccount').textContent='تم النسخ';setTimeout(()=>$('copyAccount').textContent='نسخ المعلومات',1200)}catch{window.prompt('انسخ المعلومات:',val)}};
 updatePaymentUI();
-refreshDeliveryEstimate();
 
 $('checkoutForm').onsubmit=e=>{
   e.preventDefault();if(!cartEntries().length)return;
